@@ -1,0 +1,277 @@
+{
+  "info": {
+    "_postman_id": "8e362149-fb93-41c3-8822-a9b09fb13f36",
+    "name": "Industrial Automation Backend API",
+    "description": "Complete Postman collection for testing the Industrial Automation and Admin Dashboard API system.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin Authentication",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/admin/login",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "admin", "login"]
+            },
+            "description": "Exchanges admin credentials for a JWT token. Also sets a hardened cookie."
+          }
+        },
+        {
+          "name": "Get Admin Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/admin/profile",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "admin", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Admin Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/admin/logout",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "admin", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/admin/dashboard",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "admin", "dashboard"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product Catalog Management",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/products?page=1&limit=10&search=sensor&brandId=60d216f0d9c9e5001c888888",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "products"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "search", "value": "sensor" },
+                { "key": "brandId", "value": "60d216f0d9c9e5001c888888" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/products/60d216f0d9c9e5001c999999",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "products", "60d216f0d9c9e5001c999999"]
+            }
+          }
+        },
+        {
+          "name": "Get Related Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/products/60d216f0d9c9e5001c999999/related",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "products", "60d216f0d9c9e5001c999999", "related"]
+            }
+          }
+        },
+        {
+          "name": "Create Product (Multipart)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "productName", "value": "Proximity Inductive Sensor", "type": "text" },
+                { "key": "modelNumber", "value": "PR12-4DN", "type": "text" },
+                { "key": "hsnCode", "value": "85365090", "type": "text" },
+                { "key": "price", "value": "1200", "type": "text" },
+                { "key": "discountedPrice", "value": "999", "type": "text" },
+                { "key": "description", "value": "High-performance proximity sensor for conveyor line positioning.", "type": "text" },
+                { "key": "brandId", "value": "60d216f0d9c9e5001c888888", "type": "text" },
+                { "key": "categoryId", "value": "60d216f0d9c9e5001c777777", "type": "text" },
+                { "key": "images", "type": "file", "src": [], "description": "Multiple product images files" },
+                { "key": "pdfFile", "type": "file", "src": [], "description": "Optional PDF catalog manual file" }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/products",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "products"]
+            }
+          }
+        },
+        {
+          "name": "Toggle Product Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/products/60d216f0d9c9e5001c999999/toggle-status",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "products", "60d216f0d9c9e5001c999999", "toggle-status"]
+            }
+          }
+        },
+        {
+          "name": "Delete Product (Soft)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/products/60d216f0d9c9e5001c999999",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "products", "60d216f0d9c9e5001c999999"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public Visitor Enquiries",
+      "item": [
+        {
+          "name": "Submit Contact Inquiry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Divyansh Sharma\",\n  \"email\": \"divyansh@example.com\",\n  \"phone\": \"+919876543210\",\n  \"message\": \"I would like to request a bulk quote for 50 inductive sensors (PR12-4DN). Please revert via email.\"\n}"
+            },
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/contact",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "contact"]
+            }
+          }
+        },
+        {
+          "name": "Get All Inquiries (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://127.0.0.1:5000/api/inquiries?page=1&limit=10",
+              "protocol": "http",
+              "host": ["127.0.0.1"],
+              "port": "5000",
+              "path": ["api", "inquiries"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
